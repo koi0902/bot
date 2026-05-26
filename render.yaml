@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: wa-baileys-bot
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    disk:
+      name: auth-storage
+      mountPath: /opt/render/project/src/auth_info
+      sizeGB: 1
