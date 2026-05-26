@@ -1,6 +1,7 @@
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
 const { Boom } = require("@hapi/boom");
 const pino = require("pino");
+const http = require("http");
 
 const PREFIX = "🖕";
 
@@ -45,7 +46,7 @@ _Prefix: ${PREFIX}_
 🤖 *Nama:* WA Bot
 ⚡ *Library:* Baileys
 🔧 *Prefix:* ${PREFIX}
-☁️ *Host:* Render
+☁️ *Host:* Railway
 
 Ketik *${PREFIX}menu* untuk daftar perintah.
       `.trim();
@@ -79,6 +80,15 @@ Ketik *${PREFIX}menu* untuk daftar perintah.
     }
   },
 };
+
+// HTTP server untuk UptimeRobot ping
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end("Bot aktif!");
+}).listen(PORT, () => {
+  console.log(`[SERVER] Berjalan di port ${PORT}`);
+});
 
 async function mulaiBot() {
   const { state, saveCreds } = await useMultiFileAuthState("auth_info");
